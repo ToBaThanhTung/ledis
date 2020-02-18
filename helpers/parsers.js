@@ -2,7 +2,7 @@
 import { getCmd, setCmd, saddCmd, sremCmd, smembersCmd, sinterCmd, keysCmd, delCmd, expireCmd, ttlCmd, saveCmd, restoreCmd } from './actions';
 
 export const parseCommand = (state, setState, input) => {
-  const inputArr = input.split(" ");
+  const inputArr = input.trim().split(/\s+/);
   const command = inputArr[0];
   const args = inputArr.length > 1 ? inputArr.slice(1) : [];
   const argsString = args.join(" ");

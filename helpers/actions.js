@@ -4,7 +4,7 @@ import nanoid from 'nanoid';
 export const setCmd = (ledis, args) => {
   if (args.length !== 2) {
     return {
-      updatedLedis: { ...ledis, [key]: value },
+      updatedLedis: { ...ledis },
       result: Errors.numOfArguments("set", 2)
     }
   }

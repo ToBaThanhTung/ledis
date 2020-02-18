@@ -24,8 +24,8 @@ function Input({ inputRef }) {
   const [text, setText] = useState('');
 
   const history = getHistoryQueue(state.history);
-  const scrollToBottom = () => commandEndRef.current.scrollIntoView({ behavior: "smooth" })
-  useEffect(scrollToBottom, [text])
+  const scrollToBottom = () => commandEndRef.current.scrollIntoView({ behavior: "smooth" });
+  useEffect(scrollToBottom, [text]);
   useEffect(() => {
     for (let key in timeOut) {
       setTimeout(() => {
@@ -98,6 +98,7 @@ function Input({ inputRef }) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyPress={processInput}
+          onKeyUp={processInput}
           onKeyDown={onKeyDown}
           ref={inputRef}
           autoComplete="off"

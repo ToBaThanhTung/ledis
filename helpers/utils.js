@@ -8,7 +8,7 @@ export const KEY_DOWN = 40;
 export const KEY_SLASH = 191;
 export const KEY_ESC = 27;
 
-export const MAX_COMMAND_QUEUE_LENGTH = 12;
+export const MAX_COMMAND_QUEUE_LENGTH = 100;
 
 
 export const getHistoryQueue = (serialized) => {

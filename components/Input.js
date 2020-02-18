@@ -44,6 +44,7 @@ function Input({ inputRef }) {
     const value = e.target.value;
     if (e.target.value) {
       const matched = history.match(i => i.indexOf(value) === 0);
+      // show least common char as suggest test
       const suggestText = findCommon(matched);
       setSuggest(suggestText)
     }
@@ -104,7 +105,7 @@ function Input({ inputRef }) {
           autoComplete="off"
         />
         <input id="suggest"
-          className="bg-transparent text-foreground w-full z-0 absolute top-0 left-0 pointer-events-none opacity-25 z-5"
+          className="bg-transparent text-foreground w-full z-0 absolute top-0 left-0 pointer-events-none opacity-25"
           value={suggest}
           disabled={true}
         />

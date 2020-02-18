@@ -6,7 +6,7 @@ const Errors = {
   noArgument: (command) => `ERROR: command ${command} no need any args`,
   wrongFormatSecond: "ERROR: second must be an positive integer",
   notSetTimeOut: "ERROR: this key has not set timeout",
-  
+  noSnapShots: "ERROR: no snapshot has been set"
 }
 
 export default Errors;

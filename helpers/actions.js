@@ -282,12 +282,44 @@ export const saveCmd = (ledis, timeOut, args) => {
     }
   }
   snapshots.hasOwnProperty("ids") ? snapshots.ids.push(id) : snapshots.ids = [id];
-  snapshots.hasOwnProperty("value") ? null  : snapshots.value = {}
+  snapshots.hasOwnProperty("value") ? null : snapshots.value = {}
   snapshots.value[id] = ledisData;
 
   localStorage.setItem("snapshots", JSON.stringify(snapshots));
 
   return {
+    result: "OK"
+  }
+}
+
+const isObjEmpty = obj => Object.entries(obj).length === 0 && obj.constructor === Object;
+
+export const restoreCmd = (ledis, timeOut, args) => {
+  if (args.length) {
+    return {
+      result: Errors.noArgument("restore")
+    }
+  }
+  const snapshots = JSON.parse(localStorage.getItem("snapshots")) || {};
+  if (isObjEmpty(snapshots)) {
+    return {
+      result: Errors.noSnapShots
+    }
+  }
+  const lastId = snapshots.ids[snapshots.ids.length - 1];
+  const preState = snapshots.value[lastId];
+  const updatedLedis = {};
+  for (let key in preState) {
+    if (preState[key].type && preState[key].type === "Set") {
+      
+      updatedLedis[key] = new Set(preState[key].data)
+    } else {
+      updatedLedis[key] = preState[key]
+    }
+  }
+
+  return {
+    updatedLedis,
     result: "OK"
   }
 }

@@ -9,7 +9,7 @@ export const parseCommand = (state, setState, input) => {
   const { ledis, outputs, timeOut, } = state;
 
   let response = null;
-  switch (command) {
+  switch (command.toLowerCase()) {
     case "set":
       response = setCmd(ledis, args)
       break;

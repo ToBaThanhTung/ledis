@@ -17,4 +17,4 @@ build
 npm run build
 ```
 ## Preview
-<img src="https://i.ibb.co/fpsVKMT/img-demo.png" alt="img-demo" width="300" height="500">
+<img src="https://pasteboard.co/IVf5jjb.png" alt="img-demo" width="300" height="500">

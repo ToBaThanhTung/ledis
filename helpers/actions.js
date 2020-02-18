@@ -24,7 +24,7 @@ export const getCmd = (ledis, args) => {
   const [key] = args;
   return {
     updatedLedis: ledis,
-    result: `${key}: ${ledis[key]}`
+    result: `${ledis[key]}`
   }
 }
 

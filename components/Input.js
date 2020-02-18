@@ -47,8 +47,9 @@ function Input({ inputRef }) {
       // show least common char as suggest test
       const suggestText = findCommon(matched);
       setSuggest(suggestText);
+    } else {
+      setSuggest("");
     }
-    setSuggest("");
   }
 
   const onKeyDown = (e) => {
@@ -104,6 +105,7 @@ function Input({ inputRef }) {
           onKeyDown={onKeyDown}
           ref={inputRef}
           autoComplete="off"
+          spellCheck="false"
         />
         <input id="suggest"
           className="bg-transparent text-foreground w-full z-0 absolute top-0 left-0 pointer-events-none opacity-25"

@@ -1,4 +1,5 @@
 import Errors from './errors';
+import nanoid from 'nanoid';
 
 export const setCmd = (ledis, args) => {
   if (args.length !== 2) {
@@ -18,7 +19,7 @@ export const getCmd = (ledis, args) => {
   if (args.length !== 1) {
     return {
       updatedLedis: { ...ledis },
-      result: Errors.numOfArguments("set", 2)
+      result: Errors.numOfArguments("get", 1)
     }
   }
   const [key] = args;
@@ -252,3 +253,41 @@ export const ttlCmd = (ledis, timeOut = {}, args) => {
 
 }
 
+const isSetType = (data) => typeof data === 'object' && data instanceof Set;
+
+
+// snapshots = {
+//   ids: [id, ...]
+//   id: { ...state}
+// }
+
+export const saveCmd = (ledis, timeOut, args) => {
+
+  if (args.length) {
+    return {
+      result: Errors.noArgument("save")
+    }
+  }
+
+  const snapshots = JSON.parse(localStorage.getItem("snapshots")) || {};
+  const id = nanoid();
+
+  const ledisData = { ...ledis };
+  for (let key in ledisData) {
+    if (isSetType(ledisData[key])) {
+      ledisData[key] = {
+        type: "Set",
+        data: [...ledisData[key]]
+      }
+    }
+  }
+  snapshots.hasOwnProperty("ids") ? snapshots.ids.push(id) : snapshots.ids = [id];
+  snapshots.hasOwnProperty("value") ? null  : snapshots.value = {}
+  snapshots.value[id] = ledisData;
+
+  localStorage.setItem("snapshots", JSON.stringify(snapshots));
+
+  return {
+    result: "OK"
+  }
+}

@@ -1,5 +1,5 @@
 
-import { getCmd, setCmd, saddCmd, sremCmd, smembersCmd, sinterCmd, keysCmd, delCmd, expireCmd, ttlCmd } from './actions';
+import { getCmd, setCmd, saddCmd, sremCmd, smembersCmd, sinterCmd, keysCmd, delCmd, expireCmd, ttlCmd, saveCmnd } from './actions';
 
 export const parseCommand = (state, setState, input) => {
   const inputArr = input.split(" ");
@@ -39,6 +39,9 @@ export const parseCommand = (state, setState, input) => {
       break;
     case "ttl":
       response = ttlCmd(ledis, timeOut, args);
+      break;
+    case "save":
+      response = saveCmd(ledis, timeOut, args);
       break;
     case "clear":
       return { ledis, outputs: [] }

@@ -9,6 +9,13 @@ export const setCmd = (ledis, args) => {
     }
   }
   const [key, value] = args;
+  
+  if(ledis.hasOwnProperty(key) && typeof ledis[key] === "object") {
+    return {
+      result: Errors.wrongType("ssad", "set")
+    }
+  }
+
   return {
     updatedLedis: { ...ledis, [key]: value },
     result: `OK`
@@ -22,7 +29,13 @@ export const getCmd = (ledis, args) => {
       result: Errors.numOfArguments("get", 1)
     }
   }
+
   const [key] = args;
+  if(!ledis.hasOwnProperty(key)) {
+    return {
+      result: Errors.notFoundKey("get", key),
+    }
+  }
   return {
     updatedLedis: ledis,
     result: `${ledis[key]}`
@@ -39,10 +52,17 @@ export const saddCmd = (ledis, args) => {
   if (args.length < 2) {
     return {
       updatedLedis: { ...ledis },
-      result: Errors.multipleArgs("sadd")
+      result: Errors.multipleArgs("sadd", 2)
     }
   }
   const [key, ...values] = args;
+
+  if(ledis.hasOwnProperty(key) && typeof ledis[key] === "string") {
+    return {
+      result: Errors.wrongType("ssad", "set")
+    }
+  }
+
   const set = ledis.hasOwnProperty(key) ? ledis[key] : new Set();
   let numOfAddedValues = 0;
   values.forEach(val => {

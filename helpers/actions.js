@@ -245,7 +245,7 @@ export const ttlCmd = (ledis, timeOut = {}, args) => {
     }
   }
   const { duration, start } = timeOut[`${key}`];
-  const remain = (duration - (Date.now() - start)) / 1000;
+  const remain = Math.ceil((duration - (Date.now() - start)) / 1000);
 
   return {
     result: remain
@@ -311,7 +311,7 @@ export const restoreCmd = (ledis, timeOut, args) => {
   const updatedLedis = {};
   for (let key in preState) {
     if (preState[key].type && preState[key].type === "Set") {
-      
+
       updatedLedis[key] = new Set(preState[key].data)
     } else {
       updatedLedis[key] = preState[key]

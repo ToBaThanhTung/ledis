@@ -9,10 +9,10 @@ export const setCmd = (ledis, args) => {
     }
   }
   const [key, value] = args;
-  
-  if(ledis.hasOwnProperty(key) && typeof ledis[key] === "object") {
+
+  if (ledis.hasOwnProperty(key) && typeof ledis[key] === "object") {
     return {
-      result: Errors.wrongType("ssad", "set")
+      result: Errors.wrongType("set", "Set")
     }
   }
 
@@ -30,10 +30,17 @@ export const getCmd = (ledis, args) => {
     }
   }
 
+
   const [key] = args;
-  if(!ledis.hasOwnProperty(key)) {
+  if (!ledis.hasOwnProperty(key)) {
     return {
       result: Errors.notFoundKey("get", key),
+    }
+  }
+
+  if (ledis.hasOwnProperty(key) && typeof ledis[key] === "object") {
+    return {
+      result: Errors.wrongType("get", "Set")
     }
   }
   return {
@@ -57,9 +64,9 @@ export const saddCmd = (ledis, args) => {
   }
   const [key, ...values] = args;
 
-  if(ledis.hasOwnProperty(key) && typeof ledis[key] === "string") {
+  if (ledis.hasOwnProperty(key) && typeof ledis[key] === "string") {
     return {
-      result: Errors.wrongType("ssad", "set")
+      result: Errors.wrongType("ssad", "String")
     }
   }
 
@@ -87,6 +94,13 @@ export const sremCmd = (ledis, args) => {
   const [key, ...values] = args;
   let numOfDeletedValues = 0;
   if (ledis.hasOwnProperty(key)) {
+
+    if(typeof ledis.hasOwnProperty(key) === "string") {
+      return {
+        result: Errors.wrongType("srem", "String")
+      }
+    }
+
     const set = ledis[key];
     values.forEach(val => {
       if (set.has(val)) {
@@ -114,6 +128,12 @@ export const smembersCmd = (ledis, args) => {
   }
   const [key] = args
   if (ledis.hasOwnProperty(key)) {
+
+    if(typeof ledis[key] === "string") {
+      return {
+        result: Errors.wrongType("smembers", "String")
+      }
+    }
     const values = Array.from(ledis[key]);
     return {
       updatedLedis: { ...ledis },
@@ -144,7 +164,14 @@ export const sinterCmd = (ledis, args) => {
         result: Errors.notFoundKey("sinter", key),
       }
     }
+    if(typeof ledis[key] === "string") {
+      return {
+        result: Errors.wrongType("sinter", "String")
+      }
+    } 
   }
+
+
 
   const intersection = (setA, setB) => {
     let _intersection = new Set()

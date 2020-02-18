@@ -1,6 +1,6 @@
 
 const Errors = {
-  wrongType: (command, type) => `ERROR: command "${command}" cannot set to key of command"${type}"`,
+  wrongType: (command, type) => `ERROR: command "${command}" cannot access to type "${type}"`,
   numOfArguments: (command, num) => `ERROR: wrong number of arguments, command "${command}" must take "${num}" value`,
   multipleArgs: (command, num) => `ERROR: command "${command}" must take at least "${num}" value`,
   notFoundKey: (command, key = '') => `ERROR: Not found key "${key}", command "${command}" expect key aready definded`,

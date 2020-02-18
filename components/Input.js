@@ -46,8 +46,9 @@ function Input({ inputRef }) {
       const matched = history.match(i => i.indexOf(value) === 0);
       // show least common char as suggest test
       const suggestText = findCommon(matched);
-      setSuggest(suggestText)
+      setSuggest(suggestText);
     }
+    setSuggest("");
   }
 
   const onKeyDown = (e) => {

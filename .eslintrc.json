@@ -1,0 +1,15 @@
+{
+	"parser": "babel-eslint",
+	"env": {
+		"node": true,
+		"es6": true,
+		"browser": true
+	},
+	"plugins": ["react"],
+	"rules": {
+		"implicit-arrow-linebreak": "off",
+		"comma-dangle": "off",
+		"indent": "off",
+		"no-trailing-spaces": "off"
+	}
+}

@@ -41,8 +41,8 @@ function Input({ inputRef }) {
 
 
   const processInput = (e) => {
-    const value = e.target.value;
-    if (e.target.value) {
+    const value = e.target.value.toLowerCase();
+    if (value) {
       const matched = history.match(i => i.indexOf(value) === 0);
       // show least common char as suggest test
       const suggestText = findCommon(matched);
